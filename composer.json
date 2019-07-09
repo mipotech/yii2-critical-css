@@ -1,0 +1,21 @@
+{
+    "name": "mipotech/yii2-critical-css",
+    "description": "A Yii2 package for generating and using inline critical-path CSS.",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","css","critical","npm"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mipo Technologies Ltd",
+            "email": "team@mipo.co.il"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "mipotech\\criticalcss\\": ""
+        }
+    }
+}
