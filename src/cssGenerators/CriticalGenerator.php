@@ -101,7 +101,6 @@ class CriticalGenerator extends Component
         $process->run();
         
         if (!$process->isSuccessful()) {
-            print_r($process->getErrorOutput());die;
             throw new CssGeneratorException(
                 sprintf('Error processing URI [%s]. This is probably caused by '.
                         'the Critical npm package. Checklist: 1) `critical_bin`'.
