@@ -88,11 +88,11 @@ class CriticalGenerator extends Component
         
         $builder->setPrefix($this->criticalBin);
         $builder->setArguments([
-            '--base='.getcwd(),
+            '--base='.getcwd().'/public_html/',
             '--width='.$this->width,
             '--height='.$this->height,
             '--minify',
-            '--userAgent=\'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1\''
+            '--userAgent=\'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1\'',
         ]);
         
         $builder->setInput($html);
@@ -101,6 +101,7 @@ class CriticalGenerator extends Component
         $process->run();
         
         if (!$process->isSuccessful()) {
+            print_r($process->getErrorOutput());die;
             throw new CssGeneratorException(
                 sprintf('Error processing URI [%s]. This is probably caused by '.
                         'the Critical npm package. Checklist: 1) `critical_bin`'.

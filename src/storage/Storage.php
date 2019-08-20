@@ -67,7 +67,7 @@ class Storage extends Component
     public function writeCss($uri, $css)
     {
         $ok = file_put_contents(
-            $this->storage.'/'.urlencode($uri).'.css',
+            $this->storage.'/'.urlencode($uri . '/').'.css',
             $css
         );
         if (!$ok) {
