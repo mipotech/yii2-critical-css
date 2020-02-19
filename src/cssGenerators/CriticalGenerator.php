@@ -91,11 +91,11 @@ class CriticalGenerator extends Component
         
         $builder->setPrefix($this->criticalBin);
         $builder->setArguments([
-            '--base='.getcwd(),
+            '--base='.getcwd().'/public_html/',
             '--width='.$this->width,
             '--height='.$this->height,
             '--minify',
-            '--userAgent=\'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1\''
+            '--userAgent=\'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1\'',
         ]);
         Yii::info($builder, 'criticalCss');
         
