@@ -35,12 +35,12 @@ class Storage extends Component
      */
     public function readCss($uri)
     {
-        $path = sprintf('%s/%s.css', $this->storage, urlencode($uri));
+        $path = sprintf('%s/%s.css', $this->storage, urlencode($uri['uri']));
         if (!file_exists($path)) {
             return sprintf(
                 '/* Critical-path CSS for URI [%s] not found at [%s]. '.
                 'Check the config and run `php artisan criticalcss:make`. */',
-                $uri,
+                $uri['uri'],
                 $path
             );
         }
@@ -59,7 +59,7 @@ class Storage extends Component
         if ($this->pretend) {
             return '';
         }
-        return '<style data-inlined>'.$this->readCss($uri).'</style>';
+        return '<style data-inlined>'.$this->readCss($uri['uri']).'</style>';
     }
     /**
      * {@inheritdoc}
@@ -67,14 +67,14 @@ class Storage extends Component
     public function writeCss($uri, $css)
     {
         $ok = file_put_contents(
-            $this->storage.'/'.urlencode($uri).'.css',
+            $this->storage.'/'.urlencode($uri['template']).'.css',
             $css
         );
         if (!$ok) {
             throw new CssWriteException(
                 sprintf(
                     'Unable to write the critical-path CSS for the URI [%s] to [%s].',
-                    $uri,
+                    $uri['uri'],
                     $css
                 )
             );

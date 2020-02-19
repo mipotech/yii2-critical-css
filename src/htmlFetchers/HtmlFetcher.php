@@ -23,7 +23,7 @@ class HtmlFetcher extends Component
 
         if (!$response) {
             throw new HtmlFetchingException(
-                sprintf('Invalid response from URI [%s].', $uri)
+                sprintf('Invalid response from URI [%s].', $uri['uri'])
             );
         }
         return $this->stripCss($response);
@@ -50,6 +50,6 @@ class HtmlFetcher extends Component
      */
     protected function call($uri)
     {
-        return file_get_contents($uri);
+        return file_get_contents($uri['uri']);
     }
 }

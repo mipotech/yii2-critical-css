@@ -50,7 +50,8 @@ class CriticalCssController extends Controller
         $storage = new Storage(['storage' => getcwd() . '/public_html/css/criticalCss']);
         $cssGenerator = new CriticalGenerator(['htmlFetcher' => $htmlFetcher, 'storage' => $storage, 'width' => 375, 'height' => 812]);
         foreach ($this->getUris() as $key => $uri) {
-            Yii::info(sprintf('Processing URI [%s]', $uri));
+            Yii::info(sprintf('Processing URI [%s]', $uri['uri']), 'criticalCss');
+            Yii::info('shalom', 'criticalCss');
             $cssGenerator->generate($uri, $this->getUriAlias($key));
         }
         //$this->clearViews();

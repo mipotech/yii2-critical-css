@@ -2,6 +2,8 @@
 
 namespace mipotech\criticalcss\cssGenerators;
 
+use Yii;
+
 use yii\base\Component;
 
 use Symfony\Component\Process\ProcessBuilder;
@@ -80,6 +82,7 @@ class CriticalGenerator extends Component
     public function generate($uri, $alias = null)
     {
         $html = $this->htmlFetcher->fetch($uri);
+        Yii::info('html', 'criticalCss');
         $builder = new ProcessBuilder;
         //$commandLine = $this->criticalBin . ' ' . $uri . ' -w '.$this->width . ' -h '.$this->height . ' --userAgent \'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1\' > ' . $this->storage->storage;
         //$process = new Process($commandLine, null, null, $html, $this->timeout, []);
@@ -94,24 +97,12 @@ class CriticalGenerator extends Component
             '--minify',
             '--userAgent=\'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1\''
         ]);
+        Yii::info($builder, 'criticalCss');
         
-        $builder->setInput($html);
-        $process = $builder->getProcess();
-        //$process = $process->setCommandLine($process->getCommandLine());
-        $process->run();
+        $commmandLine = 'critical '. $uri['uri'] .' -w '. $this->width .' -h '. $this->height .' --userAgent '. escapeshellarg('Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1') 
+        . ' > ' . $this->storage->storage . '/'  . $uri['template'] . '.css';
         
-        if (!$process->isSuccessful()) {
-            print_r($process->getErrorOutput());die;
-            throw new CssGeneratorException(
-                sprintf('Error processing URI [%s]. This is probably caused by '.
-                        'the Critical npm package. Checklist: 1) `critical_bin`'.
-                        ' is correct, 2) `css` paths are correct 3) run `npm '.
-                        'install` again.', $uri)
-            );
-        }
-        return $this->storage->writeCss(
-            is_null($alias) ? $uri : $alias,
-            $process->getOutput()
-        );
+        $res = exec($commmandLine);
+      
     }
 }

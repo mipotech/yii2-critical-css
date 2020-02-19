@@ -14,7 +14,7 @@ class MakeAction extends Action
         parent::run();
         $cssGenerator = Yi::$app->criticalCss->generator;
         foreach ($this->getUris() as $key => $uri) {
-            $this->info(sprintf('Processing URI [%s]', $uri));
+            $this->info(sprintf('Processing URI [%s]', $uri['uri']));
             $cssGenerator->generate($uri, $this->getUriAlias($key));
         }
         $this->clearViews();
